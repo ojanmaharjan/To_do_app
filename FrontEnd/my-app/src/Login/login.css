@@ -1,0 +1,25 @@
+
+*{
+    background-color: #112a3e;
+}
+.logIn{
+ text-align: center;   
+ margin: auto;
+ justify-content: center;
+ margin-top: 50vh;
+ background-color: aqua;
+
+}
+.logIn input{
+    padding: 5px;
+    margin: 5px;
+    border-radius: 2px;
+    background-color: antiquewhite;
+}
+.logIn button{
+    background-color: #2479BF;
+    padding: 7px;
+    color: black;
+    font-size: 2vh;
+    font-weight:700;
+}
