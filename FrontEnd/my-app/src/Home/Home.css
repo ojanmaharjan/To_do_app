@@ -1,0 +1,10 @@
+.heading button{
+    background-color: red;
+    margin: 12vh;
+    padding: 2vh;
+    border-radius: 5px;
+    color: aliceblue;
+    margin-bottom: 5vh;
+   font-weight: 700;
+   font-size: 3vh;
+}
