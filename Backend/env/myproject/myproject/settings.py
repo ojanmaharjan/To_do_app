@@ -75,12 +75,12 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'rudidb',
-        'USER': 'rudi',
-        'PASSWORD': 'passwordunique',
-        'HOST': 'localhost',
-        'POST': '',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ToDo',            # ✅ Your database name (case-sensitive)
+        'USER': 'postgres',        # ✅ Your PostgreSQL username (default is 'postgres')
+        'PASSWORD': 'admin', # ✅ Your PostgreSQL password
+        'HOST': 'localhost',       # ✅ Or your DB host
+        'PORT': '5432',            # ✅ Default PostgreSQL port
     }
 }
 
