@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Todo
 from django.http import HttpResponse
-from .serializers import TodoSeralizers
+from .serializers import TodoSerializer
 
 
 @api_view(['GET','POST'])
@@ -11,16 +11,16 @@ from .serializers import TodoSeralizers
 
 def todo_list(request):
    if request.method  =="POST":
-      serializer = TodoSeralizers(data= request.data)
+      serializer = TodoSerializer(data= request.data)
       if serializer.is_valid():
          serializer.save()
          return Response(serializer.data)
-      return Response(serializer.error)
+      return Response(serializer.errors)
      
    
    elif request.method == "GET":
       todos = Todo.objects.all().order_by('-date')
-      serializer = TodoSeralizers(todos, many= True) #changing many todos into json format
+      serializer = TodoSerializer(todos, many= True) #changing many todos into json format
       return  Response  (serializer.data)
    
 @api_view(['DELETE'])

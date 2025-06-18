@@ -1,31 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './TodoList.css';
 
 function TodoList() {
   const [tasks, setTasks] = useState([]); // holds all your to do
   const [input, setInput] = useState('');
 
+
+  const API  = 'http://127.0.0.1:8000/myapp/todos/';
+
+  useEffect (()=> {
+    fetch(API)
+    .then(res =>res.json())
+    .then(data=> setTasks(data))
+  },[])
+
+
   const addTask = () => {
     if (input.trim()) {
-      setTasks([...tasks, { text: input, completed: false }]);
-      setInput('');
-    }
+      fetch(API,{
+        method: 'POST',
+        headers :{
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({title:input})
+      })
+.then(res=>res.json())
+.then(newTasks =>{
+  setTasks([newTasks,...tasks]);
+  setInput('');
+}) }
   };
 
-  const removeTask = (index) => {
-    const newTasks = tasks.filter((_, i) => i !== index);
-    setTasks(newTasks);
+      
+const removeTask = (id) => {
+    fetch(`${API}${id}/delete/`, {
+      method: 'DELETE'
+    })
+      .then(() => {
+        setTasks(tasks.filter(task => task.id !== id));
+      });
   };
 
-  const toggleComplete = (index) => {
-    const newTasks = tasks.map((task, i) => {
-      if (i === index) {
-        return { ...task, completed: !task.completed };
-      }
-      return task;
-    });
-    setTasks(newTasks);
-  };
+  
+
 
   return (
     <div className="todo-list">
@@ -40,10 +57,10 @@ function TodoList() {
         <button onClick={addTask}>Add</button>
       </div>
       <ul>
-        {tasks.map((task, index) => (
-          <li key={index} className={task.completed ? 'completed' : ''}>
-            <span onClick={() => toggleComplete(index)}>{task.text}</span>
-            <button onClick={() => removeTask(index)}>Delete</button>
+        {tasks.map((task) => (
+          <li key={task.id} className={task.completed ? 'completed' : ''}>
+            <span >{task.title}</span>
+            <button onClick={() => removeTask(task.id)}>Delete</button>
           </li>
         ))}
       </ul>
